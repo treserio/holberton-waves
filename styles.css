@@ -30,10 +30,10 @@
 }
 
 /* source-sans-pro */
-@font-face {
-    font-family: 'junge';
-    src:  url('https://fonts.google.com/specimen/Junge#standard-styles') format('opentype');
-}
+/* @font-face {
+    font-family: 'sans-pro';
+    src:  url('') format('opentype');
+} */
 
 .btn:hover,
 .btn:focus {
@@ -107,7 +107,7 @@ header > div {
 
 /* =============== body =============== */
 body {
-    font-family: 'junge' !important;
+    font-family: 'sans-pro' !important;
 }
 
 .school-text {
@@ -174,7 +174,9 @@ body {
 .fm-item {
     width: 221px;
 }
-
+.icon-color {
+    color: #009dc4;
+}
 /* =============== footer =============== */
 footer {
     background-color: #071629;
@@ -242,7 +244,7 @@ footer {
 .courses-hero {
     width: 100%;
 
-    background: url("images/pic_3.jpg") center no-repeat;
+    background: url("new-images/courses-hero.jpg") center no-repeat;
     background-size: cover;
 }
 
