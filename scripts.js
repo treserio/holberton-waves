@@ -1,22 +1,29 @@
 window.onload = () => {
   loadAllCarousels();
+  // loadquotes();
+  // getQuotes();
 }
 
-function loadAllCarousels() {
-  // load comments from api
+function loadquotes() {
   if ($('.comments .carousel-inner').length) {
-    $.get('https://smileschool-api.hbtn.info/quotes', (data) => {
-      // console.log('cmntData', data);
+    $.get('https://type.fit/api/quotes', (data) => {
+      // console.log(data);
+      const obj = JSON.parse(data);
+
       const cmntList = [];
-      for (let item of data) {
-        cmntList.push(createCmnt(item));
-      }
+      for (let i = 0; i < 10; ++i) {
+        console.log(obj[i]);
+        cmntList.push(createCmnt(obj[i]));
+       }
       // console.log(cmntList);
       oneStepCaro_nItems(cmntList, 1, $('.comments .carousel-inner'));
     })
       .done(() => { $('.comments .loader').hide(); });
   }
-
+}
+function loadAllCarousels() {
+  // load quote function
+  loadquotes();
   // load most popular videos from api
   if ($('.most-pop .pop-vids-4 .carousel-inner').length) {
     $.get('https://smileschool-api.hbtn.info/popular-tutorials', (data) => {
@@ -61,12 +68,10 @@ function loadAllCarousels() {
 
 function createCmnt(info) {
   const cmnt = $('<div class="d-flex flex-column flex-md-row justify-content-around justify-content-md-center align-items-center">')[0];
-  let cmntContent = `<img class="img-fluid rounded-circle mb-4 mb-md-0" src="${info.pic_url}" alt="profile_5" width="160px" height="160px">
-      <div class="comment-text ml-md-5 mr-md-0 flex-column">
-        <div>« ${info.text}</div>
-        <h4 class="mt-3 mb-0">${info.name}</h4>
-        <i>${info.title}</i>
-      </div>`;
+  let cmntContent = `<div class="comment-text ml-md-5 mr-md-0 flex-column">
+                        <div>« ${info.text}</div>
+                        <h4 class="mt-3 mb-0">${info.author}</h4>
+                      </div>`;
   $(cmnt).append(cmntContent);
   return cmnt;
 }
