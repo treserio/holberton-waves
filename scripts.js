@@ -3,7 +3,20 @@ window.onload = () => {
   // loadquotes();
   // getQuotes();
 }
-
+function getImg() {
+  $.ajax({
+    url: "https://source.unsplash.com/random/?portrait,face/108x108",
+    xhrFields: {
+       responseType: 'blob'
+    },
+    success (data) {
+       const url = window.URL || window.webkitURL;
+       const src = url.createObjectURL(data);
+       $('#image').attr('src', src);
+       console.log(data);
+    }
+ });
+}
 function loadquotes() {
   if ($('.comments .carousel-inner').length) {
     $.get('https://type.fit/api/quotes', (data) => {
@@ -11,7 +24,7 @@ function loadquotes() {
       const obj = JSON.parse(data);
 
       const cmntList = [];
-      for (let i = 0; i < 10; ++i) {
+      for (let i = 0; i < 20; ++i) {
         console.log(obj[i]);
         cmntList.push(createCmnt(obj[i]));
        }
@@ -19,9 +32,11 @@ function loadquotes() {
       oneStepCaro_nItems(cmntList, 1, $('.comments .carousel-inner'));
     })
       .done(() => { $('.comments .loader').hide(); });
+      getImg();
   }
 }
 function loadAllCarousels() {
+  // getImg();
   // load quote function
   loadquotes();
   // load most popular videos from api
@@ -68,7 +83,8 @@ function loadAllCarousels() {
 
 function createCmnt(info) {
   const cmnt = $('<div class="d-flex flex-column flex-md-row justify-content-around justify-content-md-center align-items-center">')[0];
-  let cmntContent = `<div class="comment-text ml-md-5 mr-md-0 flex-column">
+  let cmntContent = `<img class="rounded-circle mb-4 mb-md-0" src="https://source.unsplash.com/random/?portrait,face/108x108" alt="" width="160px" height="160px">
+                      <div class="comment-text ml-md-5 mr-md-0 flex-column">
                         <div>« ${info.text}</div>
                         <h4 class="mt-3 mb-0">${info.author}</h4>
                       </div>`;
