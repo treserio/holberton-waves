@@ -1,44 +1,48 @@
+let imageObj;
+let quoteObj;
 window.onload = () => {
   loadAllCarousels();
-  // loadquotes();
+  loadquotes();
   // getQuotes();
 }
-function getImg() {
-  $.ajax({
-    url: "https://source.unsplash.com/random/?portrait,face/108x108",
-    xhrFields: {
-       responseType: 'blob'
-    },
-    success (data) {
-       const url = window.URL || window.webkitURL;
-       const src = url.createObjectURL(data);
-       $('#image').attr('src', src);
-       console.log(data);
-    }
- });
-}
+
 function loadquotes() {
   if ($('.comments .carousel-inner').length) {
-    $.get('https://type.fit/api/quotes', (data) => {
-      // console.log(data);
-      const obj = JSON.parse(data);
 
-      const cmntList = [];
-      for (let i = 0; i < 20; ++i) {
-        console.log(obj[i]);
-        cmntList.push(createCmnt(obj[i]));
-       }
-      // console.log(cmntList);
-      oneStepCaro_nItems(cmntList, 1, $('.comments .carousel-inner'));
-    })
-      .done(() => { $('.comments .loader').hide(); });
-      getImg();
+    $.ajax({
+      url: 'https://randomuser.me/api/?results=10',
+      dataType: 'json',
+      beforeSend: () => {
+        // Handle the beforeSend event
+        $('.loader').show();
+      },
+      success: function(response01) {
+        $.ajax({
+          url: 'https://type.fit/api/quotes',
+          dataType: 'json',
+          success: function (response02) {
+
+            imageObj = response01;
+            quoteObj = response02;
+            cmntList = [];
+            for (let i = 0; i < 30; i++) {
+              let quote = quoteObj[Math.floor(Math.random() * quoteObj.length - 1)];
+              let user = imageObj.results[Math.floor(Math.random() * imageObj.results.length)]
+              var name = user.name.first + ' ' + user.name.last;
+              var picture = user.picture.large;
+
+              cmntList.push(createCmnt(quote, name, picture));
+            }
+            oneStepCaro_nItems(cmntList, 1, $('.comments .carousel-inner'));
+            $('.loader').hide();
+            }
+        })
+        }
+      });
+    }
   }
-}
+
 function loadAllCarousels() {
-  // getImg();
-  // load quote function
-  loadquotes();
   // load most popular videos from api
   if ($('.most-pop .pop-vids-4 .carousel-inner').length) {
     $.get('https://smileschool-api.hbtn.info/popular-tutorials', (data) => {
@@ -81,12 +85,13 @@ function loadAllCarousels() {
   }
 }
 
-function createCmnt(info) {
+function createCmnt(quote, name, picture) {
   const cmnt = $('<div class="d-flex flex-column flex-md-row justify-content-around justify-content-md-center align-items-center">')[0];
-  let cmntContent = `<img class="rounded-circle mb-4 mb-md-0" src="https://source.unsplash.com/random/?portrait,face/108x108" alt="" width="160px" height="160px">
+  let cmntContent = `<img class="rounded-circle mb-4 mb-md-0" src="${picture}" alt="" width="160px" height="160px"></img>
+                      <small class="pl-4">${name}</small>
                       <div class="comment-text ml-md-5 mr-md-0 flex-column">
-                        <div>« ${info.text}</div>
-                        <h4 class="mt-3 mb-0">${info.author}</h4>
+                        <div>« ${quote.text}</div>
+                        <h4 class="mt-3 mb-0">${quote.author}</h4>
                       </div>`;
   $(cmnt).append(cmntContent);
   return cmnt;
