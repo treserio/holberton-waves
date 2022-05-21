@@ -6,8 +6,4 @@ class ApiConfig(AppConfig):
     name = 'api'
 
     def ready(self):
-        from .models import Videos
-        import requests
-        import json
-
-        print("well done")
+        pass
