@@ -12,6 +12,8 @@ class Videos(models.Model):
     topic = models.TextField(null=True)
     #updated = date.today()
     updated = models.DateField(null=True)
+    #videoId = item.id.videoId
+    videoId = models.CharField(max_length=20, null=True)
     #thumb_url = item.snippet.thumbnails.medium.url
     thumbnail = models.URLField(null=True)
     #title = item.snippet.title
@@ -32,5 +34,5 @@ class Videos(models.Model):
     views = models.BigIntegerField(null=True)
 
     # ========== channel search values, item.snippet.channelId ==========
-    #author_pic_url =4
+    #author_pic_url =
     author_pic_url = models.URLField(null=True)

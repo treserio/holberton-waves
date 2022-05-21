@@ -7,7 +7,7 @@ from rest_framework.filters import OrderingFilter
 from .models import Videos
 from .serializers import VideosSerializer
 
-class sortedVideos(ListAPIView):
+class apiVideos(ListAPIView):
     queryset = Videos.objects.all()
     serializer_class = VideosSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]
@@ -15,6 +15,7 @@ class sortedVideos(ListAPIView):
             'id',
             'topic',
             'updated',
+            'videoId',
             'thumbnail',
             'title',
             'description',

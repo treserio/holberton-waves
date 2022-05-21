@@ -22,7 +22,7 @@ def convertDuration(pt_Str):
         s = pt_Str[:pt_Str.index('S')]
     else:
         s = '00'
-
+    # print('test', h, m, s)
     return datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
 
 def init_Vids(q_topics):
@@ -39,9 +39,12 @@ def init_Vids(q_topics):
         # print("".join([youtube_url, 'search?', api_key, part, max, f'&q="{topic}"']))
         data = requests.get("".join([youtube_url, 'search?', api_key, part, max, f'&q="{topic}"'])).json()
         for item in data['items']:
+            if item['snippet']['liveBroadcastContent'] != 'none':
+                continue
             newObj = {}
             newObj['topic'] = topic
             newObj['updated'] = datetime.date.today()
+            newObj['videoId'] = item['id']['videoId']
             newObj['thumbnail'] = item['snippet']['thumbnails']['medium']['url']
             # Incorrect string value: '\\xF0\\x9F\\x8E\\xA7Me...
             newObj['title'] = item['snippet']['title'].encode('ascii', 'ignore').decode('ascii')

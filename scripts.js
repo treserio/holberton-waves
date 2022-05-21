@@ -45,7 +45,7 @@ function loadquotes() {
 function loadAllCarousels() {
   // load most popular videos from api
   if ($('.most-pop .pop-vids-4 .carousel-inner').length) {
-    $.get('https://smileschool-api.hbtn.info/popular-tutorials', (data) => {
+    $.get('http://127.0.0.1:8000/api/?format=json', (data) => {
       // console.log('mostPopData', data);
       const cardList = [];
       for (let item of data) {
@@ -100,27 +100,21 @@ function createCmnt(quote, name, picture) {
 function createCard(info) {
   const card = $('<div class="card border-0"></div>')[0];
   let cardContent = `<div class="card-header">
-      <img src="${info.thumb_url}" width="255" height="154">
-      <img class="play-btn" src="images/play.png" width="64" height="64">
+      <a href="https://www.youtube.com/watch?v=${info.videoId}">
+        <img src="${info.thumbnail}" width="255" height="154">
+        <img class="play-btn" src="images/play.png" width="64" height="64">
+      </a>
     </div>
     <div class="card-body">
       <h5 class="card-title mt-3"><b>${info.title}</b></h5>
-      <small class="card-text">${info['sub-title']}</small>
+      <small class="card-text">${info.description}</small>
       <div class="d-flex flex-row align-items-center mt-3">
         <img class="rounded-circle" src="${info.author_pic_url}" width="30" height="30">
         <small class="text-purple ml-2"><b>${info.author}</b></small>
       </div>
       <div class="d-flex flex-row align-items-center justify-content-between mt-2">
-        <div class="d-flex justify-content-between align-items-center w-50">`;
-  for (var i = 0; i < info.star; ++i) {
-    cardContent += `<img src="images/star_on.png" width="15" height="15">`;
-  }
-  while(i++ < 5) {
-    cardContent += `<img src="images/star_off.png" width="15" height="15">`;
-  }
-  cardContent += `</div>
-        <small class="text-purple"><b>${info.duration}</b></small>
-      </div>
+          <div>${info.likes} Likes</div>`;
+  cardContent += `<small class="text-purple"><b>${info.duration}</b></small>
     </div>`;
   $(card).append(cardContent);
   return card;
