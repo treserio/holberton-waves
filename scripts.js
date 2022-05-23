@@ -45,11 +45,11 @@ function loadquotes() {
 function loadAllCarousels() {
   // load most popular videos from api
   if ($('.most-pop .pop-vids-4 .carousel-inner').length) {
-    $.get('http://127.0.0.1:8000/api/?format=json', (data) => {
+    $.get('http://127.0.0.1:8000/api/?format=json&ordering=-likes', (data) => {
       // console.log('mostPopData', data);
       const cardList = [];
-      for (let item of data) {
-        cardList.push(createCard(item));
+      for (let i = 0; i < 12; ++i) {
+        cardList.push(createCard(data[i]));
       }
       // console.log(cardList);
       oneStepCaro_nItems(cardList, 4, $('.most-pop .pop-vids-4 .carousel-inner'));
@@ -61,11 +61,11 @@ function loadAllCarousels() {
 
   // load latest videos from api
   if ($('.latest .pop-vids-4 .carousel-inner').length) {
-    $.get('https://smileschool-api.hbtn.info/latest-videos', (data) => {
+    $.get('http://127.0.0.1:8000/api/?format=json&ordering=-published', (data) => {
       // console.log('latestData', data);
       const cardList = [];
-      for (let item of data) {
-        cardList.push(createCard(item));
+      for (let i = 0; i < 12; ++i) {
+        cardList.push(createCard(data[i]));
       }
       // console.log(cardList);
       oneStepCaro_nItems(cardList, 4, $('.latest .pop-vids-4 .carousel-inner'));
@@ -120,8 +120,18 @@ function createCard(info) {
   return card;
 }
 
-function createOption(info) {
+function createTopicOption(info) {
+  if (info == "All") {
+    return $(`<option class="bg-white text-body" value="">${capFirstLtr(info)}</option>`)[0];
+  }
   return $(`<option class="bg-white text-body" value="${info}">${capFirstLtr(info)}</option>`)[0];
+}
+
+function createOrderingOption(info) {
+  if (info == "puplished") {
+    return $(`<option class="bg-white text-body" value="-${info}">Most Recent</option>`)[0];
+  }
+  return $(`<option class="bg-white text-body" value="-${info}">${capFirstLtr(info)}</option>`)[0];
 }
 
 function oneStepCaro_nItems(cardList, nItems, target) {
@@ -158,22 +168,28 @@ function getCourses(target) {
   let sortBy = $('#exampleFormControlSelect1').val();
   // console.log('key:', keywords, 'top:', topic, 'sort:', sortBy);
   // set base api url
-  let apiUrl = 'https://smileschool-api.hbtn.info/courses?'
+  let apiUrl = 'http://127.0.0.1:8000/api/?format=json'
   // fill with search parameters if present
   if (keywords) {
-    apiUrl += `&q=${keywords}`;
+    apiUrl += `&search=${keywords}`;
   }
   if (topic) {
     apiUrl += `&topic=${topic}`;
   }
   if (sortBy) {
-    apiUrl += `&sort=${sortBy}`;
+    apiUrl += `&ordering=${sortBy}`;
   }
   // console.log(apiUrl);
   $.get(apiUrl, (data) => {
       // console.log('coursesData', data);
       const cardList = [];
-      for (let item of data.courses) {
+      const topicList = ['All'];
+      const orderingList = ['likes', 'published', 'views', 'duration'];
+
+      for (let item of data) {
+        if (!(topicList.includes(item.topic))) {
+          topicList.push(item.topic);
+        }
         cardList.push(createCard(item));
       }
       // console.log('coursesList', cardList);
@@ -182,14 +198,14 @@ function getCourses(target) {
       // check if the options are already there, if not fill them up!
       if (!topics.childElementCount) {
         // console.log('firing topics');
-        for (let option of data.topics) {
-          $(topics).append(createOption(option));
+        for (let option of topicList) {
+          $(topics).append(createTopicOption(option));
         }
       }
       if (!sorts.childElementCount) {
-        // console.log('firing sorts');
-        for (let option of data.sorts) {
-          $(sorts).append(createOption(option));
+
+        for (let option of orderingList) {
+          $(sorts).append(createOrderingOption(option));
         }
       }
       // add event listeners
