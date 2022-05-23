@@ -33,6 +33,7 @@ You and your team are tasked with the following:
 - [MySQL](https://www.mysql.com/)
 - [Bootstrap](https://getbootstrap.com/docs/4.6/getting-started/introduction/)
 - [JavaScript](https://www.javascript.com/)
+- [jQuery](https://jquery.com/)
 
 ### Frontend
 The site consists of 3 pages:
