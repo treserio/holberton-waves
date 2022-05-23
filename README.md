@@ -46,31 +46,31 @@ The site consists of 3 pages:
 - [manage](https://github.com/treserio/holberton-waves/blob/master/manage.py)
 
 ## Installation
-```sudo apt install python3.8-venv
-. .venv/bin/activate
-pip install mysqlclient <-- wheel fail is okay if "Successfully installed ..."
-pip install django
-pip install requests
-pip install djangorestframework
-pip install django-filter
-pip install django-extensions
-pip install django-cors-headers
-django-admin startproject django_files .
-python manage.py runserver
+    sudo apt install python3.8-venv
+    . .venv/bin/activate
+    pip install mysqlclient <-- wheel fail is okay if "Successfully installed ..."
+    pip install django
+    pip install requests
+    pip install djangorestframework
+    pip install django-filter
+    pip install django-extensions
+    pip install django-cors-headers
+    django-admin startproject django_files .
+    python manage.py runserver
 
-Migrations for api app:
-python manage.py makemigrations api
-python manage.py migrate api
+    Migrations for api app:
+    python manage.py makemigrations api
+    python manage.py migrate api
 
-To populate db:
-python manage.py runscript initialize_videos
+    To populate db:
+    python manage.py runscript initialize_videos
 
-SQL
-sudo /etc/init.d/mysql start
-CREATE DATABASE IF NOT EXISTS holb_waves;
-CREATE USER 'django-waves'@'localhost' IDENTIFIED BY 'H0Lb-6o7_m38@1l5';
-GRANT ALL PRIVILEGES ON holb_waves.* TO 'django-waves'@'localhost';
-FLUSH PRIVILEGES;```
+    SQL
+    sudo /etc/init.d/mysql start
+    CREATE DATABASE IF NOT EXISTS holb_waves;
+    CREATE USER 'django-waves'@'localhost' IDENTIFIED BY 'H0Lb-6o7_m38@1l5';
+    GRANT ALL PRIVILEGES ON holb_waves.* TO 'django-waves'@'localhost';
+    FLUSH PRIVILEGES;
 
 ## Bugs
 
@@ -78,6 +78,6 @@ CORS issue when loading our api with django "CORS header 'Access-Control-Allow-O
 - able to bypass by turning off CORS locally
 
 #### Contributors
-- [Tres](https://github.com/treserio)
-- [Tofer](https://github.com/Esoteric918)
-- [Ron](https://github.com/ronroeandassociates)
+- [Tres Serio](https://github.com/treserio)
+- [Tofer Sokolosky](https://github.com/Esoteric918)
+- [Ron Olsen](https://github.com/ronroeandassociates)
