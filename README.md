@@ -46,7 +46,7 @@ The site consists of 3 pages:
 - [manage](https://github.com/treserio/holberton-waves/blob/master/manage.py)
 
 ## Installation
-```sudo apt install python3.8-venv
+sudo apt install python3.8-venv
 . .venv/bin/activate
 pip install mysqlclient <-- wheel fail is okay if "Successfully installed ..."
 pip install django
@@ -70,7 +70,7 @@ sudo /etc/init.d/mysql start
 CREATE DATABASE IF NOT EXISTS holb_waves;
 CREATE USER 'django-waves'@'localhost' IDENTIFIED BY 'H0Lb-6o7_m38@1l5';
 GRANT ALL PRIVILEGES ON holb_waves.* TO 'django-waves'@'localhost';
-FLUSH PRIVILEGES;```
+FLUSH PRIVILEGES;
 
 ## Bugs
 
