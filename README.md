@@ -48,7 +48,11 @@ The site consists of 3 pages:
 ## Installation
     sudo apt install python3.8-venv
     . .venv/bin/activate
+<<<<<<< HEAD
     pip install mysqlclient <-- wheel fail is okay if "Successfully installed ..."
+=======
+    pip install mysqlclient    // wheel fail is okay if "Successfully installed ..."
+>>>>>>> f19a195758f9c5912a8caf0d72a8316efd6af10e
     pip install django
     pip install requests
     pip install djangorestframework
@@ -58,6 +62,7 @@ The site consists of 3 pages:
     django-admin startproject django_files .
     python manage.py runserver
 
+<<<<<<< HEAD
     Migrations for api app:
     python manage.py makemigrations api
     python manage.py migrate api
@@ -66,6 +71,16 @@ The site consists of 3 pages:
     python manage.py runscript initialize_videos
 
     SQL
+=======
+    # Migrations for api app:
+    python manage.py makemigrations api
+    python manage.py migrate api
+
+    # To populate db:
+    python manage.py runscript initialize_videos
+
+    # SQL
+>>>>>>> f19a195758f9c5912a8caf0d72a8316efd6af10e
     sudo /etc/init.d/mysql start
     CREATE DATABASE IF NOT EXISTS holb_waves;
     CREATE USER 'django-waves'@'localhost' IDENTIFIED BY 'H0Lb-6o7_m38@1l5';
