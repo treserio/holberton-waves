@@ -8,6 +8,7 @@ class VideosSerializer(serializers.ModelSerializer):
             'id',
             'topic',
             'updated',
+            'videoId',
             'thumbnail',
             'title',
             'description',
