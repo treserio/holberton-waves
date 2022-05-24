@@ -59,6 +59,28 @@ function loadAllCarousels() {
       .done(() => { $('.most-pop .loader').hide(); });
   }
 
+  // if ($('.most-pop .pop-vids-4 .carousel-inner').length) {
+  //   $.ajax({
+  //     url: 'http://127.0.0.1:8000/api/?format=json&ordering=-likes',
+  //     dataType: 'json',
+  //     headers: {
+  //       'Access-Control-Allow-Origin': '*'
+  //     },
+  //     success: (data) => {
+  //       // console.log('mostPopData', data);
+  //       const cardList = [];
+  //       for (let i = 0; i < 12; ++i) {
+  //         cardList.push(createCard(data[i]));
+  //       }
+  //       // console.log(cardList);
+  //       oneStepCaro_nItems(cardList, 4, $('.most-pop .pop-vids-4 .carousel-inner'));
+  //       oneStepCaro_nItems(cardList, 2, $('.most-pop .pop-vids-2 .carousel-inner'));
+  //       oneStepCaro_nItems(cardList, 1, $('.most-pop .pop-vids-1 .carousel-inner'));
+  //     }
+  //   })
+  //     .done(() => { $('.most-pop .loader').hide(); });
+  // }
+
   // load latest videos from api
   if ($('.latest .pop-vids-4 .carousel-inner').length) {
     $.get('http://127.0.0.1:8000/api/?format=json&ordering=-published', (data) => {
@@ -87,11 +109,13 @@ function loadAllCarousels() {
 
 function createCmnt(quote, name, picture) {
   const cmnt = $('<div class="d-flex flex-column flex-md-row justify-content-around justify-content-md-center align-items-center">')[0];
-  let cmntContent = `<img class="rounded-circle mb-4 mb-md-0" src="${picture}" alt="" width="160px" height="160px"></img>
-                      <small class="pl-4">${name}</small>
-                      <div class="comment-text ml-md-5 mr-md-0 flex-column">
+  let cmntContent = `<div class="d-flex flex-column align-items-center">
+                      <img class="rounded-circle" src="${picture}" alt="" width="160px" height="160px"></img>
+                      <small class="mb-4 mt-2 mb-md-0">${name}</small>
+                    </div>
+                      <div class="comment-text ml-md-5 mr-md-0 flex-column text-center">
                         <div>« ${quote.text}</div>
-                        <h4 class="mt-3 mb-0">${quote.author}</h4>
+                        <h4 class="mt-2 mb-0">${quote.author}</h4>
                       </div>`;
   $(cmnt).append(cmntContent);
   return cmnt;
